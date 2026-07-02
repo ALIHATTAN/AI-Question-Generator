@@ -12,10 +12,13 @@ FONT_PATH = os.path.join(
     os.path.dirname(__file__),
     "..",
     "fonts",
-    "Cairo-Regular.ttf"
+    "Amiri-Regular.ttf"
 )
 
-pdfmetrics.registerFont(TTFont("ArabicFont", FONT_PATH))
+pdfmetrics.registerFont(
+    TTFont("ArabicFont", FONT_PATH)
+)
+
 FONT_NAME = "ArabicFont"
 
 def ar(text):
