@@ -84,7 +84,10 @@ def upload_file():
     if not cleaned_text or len(cleaned_text.strip()) < 50:
         return "لم يتم استخراج نص واضح من الملف. جرّب ملفًا آخر."
 
-    questions = generate_questions(cleaned_text)
+    MAX_CHARS = 5000
+    limited_text = cleaned_text[:MAX_CHARS]
+
+    questions = generate_questions(limited_text)
 
     session["questions"] = questions
 
