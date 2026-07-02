@@ -68,6 +68,8 @@ def upload_file():
     if file.filename == "":
         return "لم يتم اختيار ملف"
 
+    os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+
     filename = secure_filename(file.filename)
     file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
 
@@ -83,9 +85,6 @@ def upload_file():
         return "لم يتم استخراج نص واضح من الملف. جرّب ملفًا آخر."
 
     questions = generate_questions(cleaned_text)
-
-    if not questions:
-        return "لم يتم توليد أسئلة من الملف."
 
     session["questions"] = questions
 
