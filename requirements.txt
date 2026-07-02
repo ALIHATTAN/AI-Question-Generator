@@ -1,6 +1,7 @@
 Flask
 PyPDF2
 pypdf
+python-docx
 nltk
 reportlab
 Werkzeug
