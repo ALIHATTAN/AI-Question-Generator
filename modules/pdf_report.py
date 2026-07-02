@@ -19,7 +19,9 @@ pdfmetrics.registerFont(TTFont("ArabicFont", FONT_PATH))
 FONT_NAME = "ArabicFont"
 
 def ar(text):
-    return "" if text is None else str(text)
+    text = "" if text is None else str(text)
+    reshaped = arabic_reshaper.reshape(text)
+    return get_display(reshaped)
 
 def draw_rtl(c, text, x, y, size=11, color=colors.black):
     c.setFillColor(color)
