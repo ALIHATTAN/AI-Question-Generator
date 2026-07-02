@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاختبار</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: #F8FAFC;
+            color: #0F172A;
+            direction: rtl;
+        }
+
+        header {
+            background: white;
+            padding: 20px 8%;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #2563EB;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563EB;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 22px;
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.08);
+            border: 1px solid #E2E8F0;
+        }
+
+        .section h2 {
+            color: #14B8A6;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .question {
+            background: #F8FAFC;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .question h3 {
+            margin-top: 0;
+            line-height: 1.8;
+            font-size: 19px;
+        }
+
+        label {
+            display: block;
+            background: white;
+            padding: 12px 16px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        label:hover {
+            border-color: #2563EB;
+            background: #EFF6FF;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            border-radius: 14px;
+            border: 1px solid #CBD5E1;
+            padding: 14px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            display: block;
+            margin: 35px auto 0;
+            padding: 16px 35px;
+            background: linear-gradient(135deg, #2563EB, #3B82F6);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .empty {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            color: #64748B;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">AI Edu Generator</div>
+</header>
+
+<div class="container">
+
+    <h1>الاختبار الناتج من الملف</h1>
+
+    {% if questions.true_false|length == 0 and questions.mcq|length == 0 and questions.short_answer|length == 0 %}
+        <div class="empty">
+            لم يتم توليد أسئلة. تأكد أن الملف يحتوي على نص واضح.
+        </div>
+    {% endif %}
+
+    <form action="/submit" method="POST">
+
+        <div class="section">
+            <h2>أولاً: أسئلة صح أو خطأ</h2>
+
+            {% for q in questions.true_false %}
+            <div class="question">
+                <h3>{{ loop.index }}. {{ q.question }}</h3>
+
+                <label>
+                    <input type="radio" name="tf_{{ loop.index0 }}" value="صح" required>
+                    صح
+                </label>
+
+                <label>
+                    <input type="radio" name="tf_{{ loop.index0 }}" value="خطأ" required>
+                    خطأ
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>ثانياً: أسئلة اختيار من متعدد</h2>
+
+            <div class="section">
+
+    <h2>ثانياً: أسئلة اختيار من متعدد</h2>
+
+    {% for q in questions.mcq %}
+
+    {% set question_index = loop.index0 %}
+
+    <div class="question">
+
+        <h3>{{ loop.index }}. {{ q.question }}</h3>
+       
+        {% for option in q.options %}
+
+        <label>
+            <input
+                type="radio"
+                name="mcq_{{ question_index }}"
+                value="{{ option }}"
+                required>
+
+            {{ option }}
+        </label>
+
+        {% endfor %}
+
+    </div>
+
+    {% endfor %}
+
+    </div>
+
+        <div class="section">
+            <h2>ثالثاً: الأسئلة القصيرة</h2>
+
+            {% for q in questions.short_answer %}
+            <div class="question">
+                <h3>{{ loop.index }}. {{ q.question }}</h3>
+
+                <textarea name="short_{{ loop.index0 }}" placeholder="اكتب إجابتك هنا" required></textarea>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button class="btn" type="submit">إنهاء الاختبار</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

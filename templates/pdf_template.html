@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        body{
+            font-family: DejaVu Sans, Arial, sans-serif;
+            direction: rtl;
+            margin:40px;
+            color:#222;
+        }
+
+        h1{
+            text-align:center;
+            color:#2563EB;
+        }
+
+        .box{
+            border:1px solid #ddd;
+            border-radius:10px;
+            padding:20px;
+            margin-bottom:25px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:15px;
+        }
+
+        th,td{
+            border:1px solid #ccc;
+            padding:10px;
+            text-align:center;
+        }
+
+        th{
+            background:#2563EB;
+            color:white;
+        }
+
+        .correct{
+            color:green;
+            font-weight:bold;
+        }
+
+        .wrong{
+            color:red;
+            font-weight:bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>تقرير نتيجة الاختبار</h1>
+
+<div class="box">
+
+<p><b>الدرجة:</b> {{ result.score }} / {{ result.total }}</p>
+
+<p><b>نسبة النجاح:</b> {{ result.percentage }} %</p>
+
+</div>
+
+<table>
+
+<tr>
+<th>السؤال</th>
+<th>إجابة الطالب</th>
+<th>الإجابة الصحيحة</th>
+<th>الحالة</th>
+</tr>
+
+{% for q in result.results %}
+
+<tr>
+
+<td>{{ q.question }}</td>
+
+<td>{{ q.user_answer }}</td>
+
+<td>{{ q.correct_answer }}</td>
+
+<td>
+
+{% if q.is_correct %}
+
+<span class="correct">✔ صحيحة</span>
+
+{% else %}
+
+<span class="wrong">✘ خاطئة</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

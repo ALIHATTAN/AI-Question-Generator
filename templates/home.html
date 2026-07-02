@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Edu Generator</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">AI Edu Generator</div>
+
+    <nav>
+        <a href="#">الرئيسية</a>
+        <a href="#features">المميزات</a>
+        <a href="#">من نحن</a>
+        <a href="#">اتصل بنا</a>
+    </nav>
+
+    <a href="#upload" class="btn-primary small-btn">ابدأ الآن</a>
+</header>
+
+<section class="hero">
+
+    <div class="hero-content">
+        <span class="badge">منصة تعليمية مدعومة بالذكاء الاصطناعي</span>
+
+        <h1>
+            نظام ذكي لتوليد
+            <span>الأسئلة التعليمية</span>
+        </h1>
+
+        <p>
+            ارفع ملفاتك التعليمية بصيغ PDF أو DOCX أو TXT،
+            وسيقوم الذكاء الاصطناعي بتحويلها إلى اختبارات تفاعلية
+            مع تصحيح تلقائي وتقرير PDF احترافي.
+        </p>
+
+        <div class="buttons">
+            <a href="#upload" class="btn-primary">ابدأ توليد الأسئلة</a>
+            <a href="#features" class="btn-secondary">تعرف على المميزات</a>
+        </div>
+
+        <form id="upload" class="upload-box" action="/upload" method="POST" enctype="multipart/form-data">
+    <label class="custom-upload">
+        <input type="file" name="file" accept=".pdf,.docx,.txt" required>
+        📁 اختر ملف PDF أو DOCX أو TXT
+    </label>
+
+    <button type="submit">توليد الأسئلة الآن</button>
+       </form>
+    </div>
+
+    <div class="hero-card">
+        <div class="hero-illustration">
+            🎓
+        </div>
+
+        <h3>ذكاء اصطناعي للتعليم</h3>
+        <p>تحويل المحتوى إلى اختبارات خلال ثوانٍ.</p>
+
+        <div class="mini-files">
+            <span>PDF</span>
+            <span>DOCX</span>
+            <span>TXT</span>
+        </div>
+    </div>
+
+</section>
+
+<section id="features" class="features">
+
+    <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>رفع الملفات</h3>
+        <p>يدعم PDF و DOCX و TXT بسهولة وأمان.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3>توليد الأسئلة</h3>
+        <p>اختيار من متعدد وصح وخطأ وأسئلة قصيرة.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <h3>تصحيح تلقائي</h3>
+        <p>تصحيح فوري مع حساب الدرجة ونسبة النجاح.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>تقارير PDF</h3>
+        <p>تقرير احترافي جاهز للطباعة والمشاركة.</p>
+    </div>
+
+</section>
+
+</body>
+</html>

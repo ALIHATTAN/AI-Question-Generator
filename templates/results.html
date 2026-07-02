@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتيجة الاختبار</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            background: #F8FAFC;
+            font-family: 'Cairo', sans-serif;
+            color: #0F172A;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563EB;
+            margin-bottom: 35px;
+            font-size: 38px;
+        }
+
+        .summary, .summary-box {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            margin-bottom: 35px;
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.08);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #F8FAFC;
+            padding: 20px;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid #E2E8F0;
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            color: #64748B;
+            font-size: 16px;
+        }
+
+        .stat-card p {
+            margin: 10px 0 0;
+            font-size: 28px;
+            font-weight: 800;
+            color: #2563EB;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            margin-top: 20px;
+            color: #14B8A6;
+        }
+
+        .progress-box {
+            background: #E2E8F0;
+            border-radius: 999px;
+            height: 18px;
+            overflow: hidden;
+            margin-top: 25px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(135deg, #2563EB, #14B8A6);
+            width: {{ result.percentage }}%;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .analysis-card {
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .strength {
+            background: #DCFCE7;
+            border-right: 6px solid #16A34A;
+        }
+
+        .weakness {
+            background: #FEE2E2;
+            border-right: 6px solid #DC2626;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            border: 1px solid #E2E8F0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stats-table th {
+            background: #2563EB;
+            color: white;
+        }
+
+        .card {
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 18px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .correct {
+            background: #DCFCE7;
+            border-right: 7px solid #16A34A;
+        }
+
+        .wrong {
+            background: #FEE2E2;
+            border-right: 7px solid #DC2626;
+        }
+
+        .question {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .answer {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            background: #2563EB;
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            display: block;
+            margin: 25px auto 0;
+            text-align: center;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        @media (max-width: 800px) {
+            .stats, .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>نتيجة الاختبار</h1>
+
+    {% set correct_count = result.score %}
+    {% set wrong_count = result.total - result.score %}
+
+    <div class="summary">
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>الدرجة</h3>
+                <p dir="ltr">{{ result.score }} / {{ result.total }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>نسبة النجاح</h3>
+                <p dir="ltr">{{ result.percentage }}%</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>الإجابات الصحيحة</h3>
+                <p>{{ correct_count }}</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>الإجابات الخاطئة</h3>
+                <p>{{ wrong_count }}</p>
+            </div>
+        </div>
+
+        <div class="progress-box">
+            <div class="progress"></div>
+        </div>
+
+        {% if result.percentage >= 90 %}
+            <div class="message">ممتاز جدًا، أداء رائع 👏</div>
+        {% elif result.percentage >= 75 %}
+            <div class="message">جيد جدًا، استمر 👍</div>
+        {% elif result.percentage >= 60 %}
+            <div class="message">جيد، تحتاج مراجعة بسيطة</div>
+        {% else %}
+            <div class="message">تحتاج إلى مراجعة المحتوى مرة أخرى</div>
+        {% endif %}
+
+    </div>
+
+    {% if result.analysis %}
+    <div class="summary-box">
+        <h2 style="color:#2563EB;">تحليل الأداء</h2>
+
+        <div class="analysis-grid">
+            <div class="analysis-card strength">
+                <h3 style="color:#16A34A;">نقاط القوة</h3>
+                {% for item in result.analysis.strengths %}
+                    <p>✅ {{ item }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="analysis-card weakness">
+                <h3 style="color:#DC2626;">نقاط الضعف</h3>
+                {% for item in result.analysis.weaknesses %}
+                    <p>⚠️ {{ item }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="summary-box">
+        <h2>📊 إحصائيات حسب نوع السؤال</h2>
+
+        <table class="stats-table">
+            <tr>
+                <th>نوع السؤال</th>
+                <th>الإجابات الصحيحة</th>
+            </tr>
+
+            {% for type, stat in result.statistics.items() %}
+            <tr>
+                <td>{{ type }}</td>
+                <td>{{ stat.correct }} / {{ stat.total }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="summary-box">
+        <h2>📚 التوصيات</h2>
+
+        <ul>
+            {% for item in result.recommendations %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% for q in result.results %}
+    <div class="card {% if q.is_correct %}correct{% else %}wrong{% endif %}">
+
+        <div class="question">
+            {{ loop.index }}. {{ q.question }}
+        </div>
+
+        <div class="answer">
+            <strong>نوع السؤال:</strong>
+            {{ q.type }}
+        </div>
+
+        <div class="answer">
+            <strong>إجابتك:</strong>
+            {{ q.user_answer }}
+        </div>
+
+        <div class="answer">
+            <strong>الإجابة الصحيحة:</strong>
+            {{ q.correct_answer }}
+        </div>
+
+        <div class="answer">
+            <strong>الملاحظة:</strong>
+            {{ q.feedback }}
+        </div>
+
+        <div class="answer">
+            {% if q.is_correct %}
+                ✅ إجابة صحيحة
+            {% else %}
+                ❌ إجابة خاطئة
+            {% endif %}
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <button class="btn" onclick="window.location='/'">
+        العودة للرئيسية
+    </button>
+
+    <a href="/uploads/Quiz_Report.pdf" download class="btn">
+        تحميل تقرير PDF
+    </a>
+
+</div>
+
+</body>
+</html>

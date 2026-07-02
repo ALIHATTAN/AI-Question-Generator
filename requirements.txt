@@ -1,0 +1,9 @@
+Flask
+PyPDF2
+nltk
+reportlab
+Werkzeug
+python-dotenv
+requests
+arabic-reshaper
+python-bidi
