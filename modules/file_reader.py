@@ -16,10 +16,11 @@ def read_pdf(file_path):
 
 
 def read_docx(file_path):
-    document = Document(file_path)
     text = ""
 
-    for paragraph in document.paragraphs:
+    doc = Document(file_path)
+
+    for paragraph in doc.paragraphs:
         text += paragraph.text + "\n"
 
     return text
@@ -31,16 +32,16 @@ def read_txt(file_path):
 
 
 def extract_text(file_path):
-    file_path = file_path.lower()
+    lower_path = file_path.lower()
 
-    if file_path.endswith(".pdf"):
+    if lower_path.endswith(".pdf"):
         return read_pdf(file_path)
 
-    elif file_path.endswith(".docx"):
+    elif lower_path.endswith(".docx"):
         return read_docx(file_path)
 
-    elif file_path.endswith(".txt"):
+    elif lower_path.endswith(".txt"):
         return read_txt(file_path)
 
     else:
-        return "Unsupported file type"
+        return ""
