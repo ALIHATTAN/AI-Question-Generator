@@ -8,14 +8,20 @@ import arabic_reshaper
 import os
 from datetime import datetime
 
+FONT_PATHS = [
+    r"C:\Windows\Fonts\tahoma.ttf",
+    r"C:\Windows\Fonts\arial.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf",
+]
 
-FONT_PATH = r"C:\Windows\Fonts\tahoma.ttf"
+FONT_NAME = "Helvetica"
 
-try:
-    pdfmetrics.registerFont(TTFont("ArabicFont", FONT_PATH))
-    FONT_NAME = "ArabicFont"
-except:
-    FONT_NAME = "Helvetica"
+for path in FONT_PATHS:
+    if os.path.exists(path):
+        pdfmetrics.registerFont(TTFont("ArabicFont", path))
+        FONT_NAME = "ArabicFont"
+        break
 
 
 def ar(text):
